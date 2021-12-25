@@ -1,0 +1,25 @@
+#+TITLE: Extract DHL label
+* Extract DHL Label
+  Mit diesen beiden Scripten können Briefmarken und Paketlabels der Deutschen Post aus den entsprechenden PDFs extrahiert werden.
+  Die einzelnen Bilder können dann über gLabels auf einem Brother QL Lalebdrucker gedruckt werden.
+* Vorbedingungen
+  - ImageMagick (convert executable)
+  - Ein PDF vom Onlineshop der Dt. Post (Briefmarken oder Paketlabel)
+
+Bei ImageMagick muss ggf noch diePDF Policy editiert werden damit convert auch das PDF umwandeln kann.
+Dazu muss in der Datei /etc/ImageMagick-6/policy.xml der Eintrag für PDFs angepasst werden, 
+
+#+begin_src xml
+<policy domain="coder" rights="read|write" pattern="PDF" />
+#+end_src
+* Funktionsweise
+Beide Scripte nutzen die convert Funktion von ImageMAgick, um das EingangsPDF (erster Eingangparameter) in ein Bild zu wandeln. Das File wird temporär im Userverzeichnigs unter ~/temp erzeugt.
+** extractlabel.sh
+Aus dem erzeugten Bild werden anschließend Adresslabel und Barcode Label ausgeschnitten.
+Die Bilder können dann bspw. mit einem Labelwriter (QL700) gedruckt werden.
+   
+** extract-mail.sh   
+Aus dem Bild werden anschließend mit Hilfe des zweiten Eingangsparameters (NUMOFSTAMPS) die einzelnen Marken als separate Bilder erzeugt.
+   
+* mögliche Verbesserungen
+Automatisch die erzeugten Files an den Brother Labelwriter direkt zum Druck schicken.
